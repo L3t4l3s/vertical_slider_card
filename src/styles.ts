@@ -128,7 +128,7 @@ export const sliderStyles = css`
     left: 25%;
     right: 25%;
     height: 4px;
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--text-primary-color, #fff);
     border-radius: 2px;
     pointer-events: none;
     transform: translateY(-50%);
