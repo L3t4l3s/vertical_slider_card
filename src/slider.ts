@@ -76,11 +76,10 @@ export class VerticalCoverSlider extends LitElement {
     if (!slider) return this.value;
 
     const rect = slider.getBoundingClientRect();
-    // Top of slider = 0% open (closed), bottom = 100% open
+    // fraction: 0 = top of slider, 1 = bottom of slider
     const fraction = (e.clientY - rect.top) / rect.height;
-    // Invert: dragging to top = more closed (lower position value)
-    // fraction 0 (top) = 0% open, fraction 1 (bottom) = 100% open
-    const rawValue = fraction * (this.max - this.min) + this.min;
+    // Invert: top = 100% open, bottom = 0% closed (matches HA native)
+    const rawValue = (1 - fraction) * (this.max - this.min) + this.min;
 
     return this._clampAndStep(rawValue);
   }

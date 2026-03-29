@@ -18,19 +18,41 @@ export const cardStyles = css`
     position: relative;
   }
 
-  /* Header info area */
-  .info {
-    text-align: center;
+  /* Header: icon + name at top */
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     width: 100%;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-bottom: 4px;
+    color: var(--primary-text-color);
+  }
+
+  .header ha-icon {
+    --mdc-icon-size: 20px;
     flex-shrink: 0;
   }
 
-  .info:empty {
-    display: none;
+  .entity-name {
+    font-size: 14px;
+    font-weight: 400;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Footer: state + last-changed at bottom */
+  .footer {
+    text-align: center;
+    width: 100%;
+    flex-shrink: 0;
+    margin-top: 4px;
   }
 
   .state-text {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     color: var(--primary-text-color);
     line-height: 1.2;
@@ -67,31 +89,6 @@ export const cardStyles = css`
     --mdc-icon-button-size: 36px;
     --mdc-icon-size: 20px;
     color: var(--primary-text-color);
-  }
-
-  /* Name row at bottom */
-  .name-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    width: 100%;
-    justify-content: center;
-    flex-shrink: 0;
-    margin-top: 8px;
-    color: var(--primary-text-color);
-  }
-
-  .name-row ha-icon {
-    --mdc-icon-size: 20px;
-    flex-shrink: 0;
-  }
-
-  .entity-name {
-    font-size: 14px;
-    font-weight: 400;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 
   /* Unavailable state */

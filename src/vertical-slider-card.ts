@@ -127,13 +127,9 @@ export class VerticalSliderCard extends LitElement implements LovelaceCard {
           hasDoubleClick: hasAction(this._config.double_tap_action),
         })}"
       >
-        <div class="info">
-          ${!hideState
-            ? html`<div class="state-text">${stateDisplay}</div>`
-            : nothing}
-          ${!hideState && lastChanged
-            ? html`<div class="last-changed">${lastChanged}</div>`
-            : nothing}
+        <div class="header">
+          <ha-icon .icon="${icon}"></ha-icon>
+          <span class="entity-name">${entityName}</span>
         </div>
 
         <div class="slider-container">
@@ -147,10 +143,15 @@ export class VerticalSliderCard extends LitElement implements LovelaceCard {
 
         ${this._renderFeatures(supportedFeatures)}
 
-        <div class="name-row">
-          <ha-icon .icon="${icon}"></ha-icon>
-          <span class="entity-name">${entityName}</span>
-        </div>
+        ${!hideState
+          ? html`
+            <div class="footer">
+              <div class="state-text">${stateDisplay}</div>
+              ${lastChanged
+                ? html`<div class="last-changed">${lastChanged}</div>`
+                : nothing}
+            </div>`
+          : nothing}
       </ha-card>
     `;
   }
@@ -285,6 +286,8 @@ export class VerticalSliderCard extends LitElement implements LovelaceCard {
     switch (feature.type) {
       case 'cover-open-close':
         return this._renderOpenClose(supportedFeatures);
+      case 'cover-tilt':
+        return this._renderTilt(supportedFeatures);
       default:
         return nothing;
     }
@@ -321,6 +324,53 @@ export class VerticalSliderCard extends LitElement implements LovelaceCard {
           </ha-icon-button>`
         : nothing}
     `;
+  }
+
+  private _renderTilt(supportedFeatures: number) {
+    const canOpenTilt = supportedFeatures & CoverEntityFeature.OPEN_TILT;
+    const canCloseTilt = supportedFeatures & CoverEntityFeature.CLOSE_TILT;
+    const canStopTilt = supportedFeatures & CoverEntityFeature.STOP_TILT;
+
+    if (!canOpenTilt && !canCloseTilt) return nothing;
+
+    return html`
+      ${canOpenTilt
+        ? html`<ha-icon-button @click="${this._onOpenTilt}">
+            <ha-icon icon="mdi:arrow-top-right"></ha-icon>
+          </ha-icon-button>`
+        : nothing}
+      ${canStopTilt
+        ? html`<ha-icon-button @click="${this._onStopTilt}">
+            <ha-icon icon="mdi:stop"></ha-icon>
+          </ha-icon-button>`
+        : nothing}
+      ${canCloseTilt
+        ? html`<ha-icon-button @click="${this._onCloseTilt}">
+            <ha-icon icon="mdi:arrow-bottom-left"></ha-icon>
+          </ha-icon-button>`
+        : nothing}
+    `;
+  }
+
+  private _onOpenTilt(ev: Event): void {
+    ev.stopPropagation();
+    this.hass.callService('cover', 'open_cover_tilt', {
+      entity_id: this._config.entity,
+    });
+  }
+
+  private _onStopTilt(ev: Event): void {
+    ev.stopPropagation();
+    this.hass.callService('cover', 'stop_cover_tilt', {
+      entity_id: this._config.entity,
+    });
+  }
+
+  private _onCloseTilt(ev: Event): void {
+    ev.stopPropagation();
+    this.hass.callService('cover', 'close_cover_tilt', {
+      entity_id: this._config.entity,
+    });
   }
 
   private _onOpen(ev: Event): void {
