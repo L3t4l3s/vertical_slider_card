@@ -62,7 +62,16 @@ export class VerticalSliderCard extends LitElement implements LovelaceCard {
   }
 
   public getCardSize(): number {
-    return 4;
+    return 6;
+  }
+
+  public getGridOptions() {
+    return {
+      columns: 6,
+      rows: 4,
+      min_columns: 2,
+      min_rows: 3,
+    };
   }
 
   protected shouldUpdate(changedProps: PropertyValues): boolean {

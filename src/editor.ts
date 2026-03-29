@@ -62,7 +62,7 @@ export class VerticalSliderCardEditor
       color: var(--primary-text-color);
     }
 
-    ha-entity-picker,
+    ha-selector,
     ha-textfield,
     ha-icon-picker {
       width: 100%;
@@ -83,14 +83,13 @@ export class VerticalSliderCardEditor
           ${this.hass.localize?.('ui.panel.lovelace.editor.card.generic.entity') || 'Entity'}
         </div>
         <div class="editor-row">
-          <ha-entity-picker
+          <ha-selector
             .hass="${this.hass}"
+            .selector="${{ entity: { domain: 'cover' } }}"
             .value="${this._config.entity || ''}"
-            .includeDomains="${['cover']}"
-            .entityFilter="${(entity: any) => entity.entity_id.startsWith('cover.')}"
+            .required="${true}"
             @value-changed="${this._entityChanged}"
-            allow-custom-entity
-          ></ha-entity-picker>
+          ></ha-selector>
         </div>
       </div>
 

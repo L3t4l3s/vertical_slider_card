@@ -41,7 +41,8 @@ export class VerticalCoverSlider extends LitElement {
 
   render() {
     const fillPct = this._fillFraction * 100;
-    const handleTop = fillPct;
+    // Clamp handle between 5% and 95% so it never sits flush at edges
+    const handleTop = Math.max(5, Math.min(95, fillPct));
     const colorStyle = this.color ? `--slider-color: ${this.color}` : '';
 
     return html`

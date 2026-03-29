@@ -11,7 +11,8 @@ export const cardStyles = css`
     align-items: center;
     padding: 12px;
     box-sizing: border-box;
-    height: var(--vertical-slider-card-height, 400px);
+    height: 100%;
+    overflow: hidden;
     position: relative;
   }
 
@@ -93,6 +94,8 @@ export const sliderStyles = css`
     touch-action: none;
     cursor: pointer;
     outline: none;
+    /* Padding so handle never sits flush at edges */
+    --slider-padding: 8px;
   }
 
   .slider:focus-visible {
@@ -125,7 +128,7 @@ export const sliderStyles = css`
     left: 25%;
     right: 25%;
     height: 4px;
-    background: var(--card-background-color, #fff);
+    background: rgba(255, 255, 255, 0.9);
     border-radius: 2px;
     pointer-events: none;
     transform: translateY(-50%);
