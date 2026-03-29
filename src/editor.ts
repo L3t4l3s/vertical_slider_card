@@ -48,18 +48,20 @@ export class VerticalSliderCardEditor
     .feature-toggles {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 16px;
+      padding: 4px 0;
     }
 
     .feature-toggle {
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: space-between;
     }
 
     .feature-toggle label {
       font-size: 14px;
       color: var(--primary-text-color);
+      cursor: pointer;
     }
 
     ha-selector,
@@ -138,11 +140,11 @@ export class VerticalSliderCardEditor
           ${FEATURE_TYPES.map(
             (type) => html`
               <div class="feature-toggle">
+                <label>${this._featureLabel(type)}</label>
                 <ha-switch
                   .checked="${this._hasFeature(type)}"
                   @change="${(e: Event) => this._featureToggled(e, type)}"
                 ></ha-switch>
-                <label>${this._featureLabel(type)}</label>
               </div>
             `,
           )}

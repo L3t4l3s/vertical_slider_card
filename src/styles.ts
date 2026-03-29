@@ -3,6 +3,7 @@ import { css } from 'lit';
 export const cardStyles = css`
   :host {
     display: block;
+    height: 100%;
   }
 
   ha-card {
@@ -12,6 +13,7 @@ export const cardStyles = css`
     padding: 12px;
     box-sizing: border-box;
     height: 100%;
+    min-height: 300px;
     overflow: hidden;
     position: relative;
   }
@@ -20,7 +22,11 @@ export const cardStyles = css`
   .info {
     text-align: center;
     width: 100%;
-    margin-bottom: 8px;
+    flex-shrink: 0;
+  }
+
+  .info:empty {
+    display: none;
   }
 
   .state-text {
@@ -53,13 +59,39 @@ export const cardStyles = css`
     gap: 8px;
     width: 100%;
     justify-content: center;
-    margin-top: 8px;
+    flex-shrink: 0;
+    margin-top: 4px;
   }
 
   .features ha-icon-button {
     --mdc-icon-button-size: 36px;
     --mdc-icon-size: 20px;
     color: var(--primary-text-color);
+  }
+
+  /* Name row at bottom */
+  .name-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 8px;
+    color: var(--primary-text-color);
+  }
+
+  .name-row ha-icon {
+    --mdc-icon-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .entity-name {
+    font-size: 14px;
+    font-weight: 400;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   /* Unavailable state */

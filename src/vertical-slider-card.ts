@@ -116,6 +116,9 @@ export class VerticalSliderCard extends LitElement implements LovelaceCard {
       this.removeAttribute('unavailable');
     }
 
+    const icon = this._config.icon || stateObj.attributes.icon || 'mdi:window-shutter';
+    const hideState = this._config.hide_state === true;
+
     return html`
       <ha-card
         @action="${this._handleAction}"
@@ -125,8 +128,10 @@ export class VerticalSliderCard extends LitElement implements LovelaceCard {
         })}"
       >
         <div class="info">
-          <div class="state-text">${stateDisplay}</div>
-          ${lastChanged
+          ${!hideState
+            ? html`<div class="state-text">${stateDisplay}</div>`
+            : nothing}
+          ${!hideState && lastChanged
             ? html`<div class="last-changed">${lastChanged}</div>`
             : nothing}
         </div>
@@ -141,6 +146,11 @@ export class VerticalSliderCard extends LitElement implements LovelaceCard {
         </div>
 
         ${this._renderFeatures(supportedFeatures)}
+
+        <div class="name-row">
+          <ha-icon .icon="${icon}"></ha-icon>
+          <span class="entity-name">${entityName}</span>
+        </div>
       </ha-card>
     `;
   }
