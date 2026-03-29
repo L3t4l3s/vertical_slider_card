@@ -41,7 +41,7 @@ export class VerticalCoverSlider extends LitElement {
 
   render() {
     const fillPct = this._fillFraction * 100;
-    const handleBottom = (1 - this._fillFraction) * 100;
+    const handleTop = fillPct;
     const colorStyle = this.color ? `--slider-color: ${this.color}` : '';
 
     return html`
@@ -61,9 +61,9 @@ export class VerticalCoverSlider extends LitElement {
         >
           <div class="slider-track-bg"></div>
           <div class="slider-track-fill" style="height: ${fillPct}%"></div>
-          <div class="slider-handle" style="bottom: ${handleBottom}%"></div>
+          <div class="slider-handle" style="top: ${handleTop}%"></div>
         </div>
-        <div class="tooltip" style="bottom: ${handleBottom}%">
+        <div class="tooltip" style="top: ${handleTop}%">
           ${Math.round(this._displayValue)} %
         </div>
       </div>

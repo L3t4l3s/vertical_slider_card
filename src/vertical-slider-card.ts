@@ -48,8 +48,8 @@ export class VerticalSliderCard extends LitElement implements LovelaceCard {
   }
 
   public setConfig(config: VerticalSliderCardConfig): void {
-    if (!config.entity || !config.entity.startsWith('cover.')) {
-      throw new Error('Please define a cover entity');
+    if (!config.entity) {
+      throw new Error('Please define an entity');
     }
 
     this._config = {

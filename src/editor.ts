@@ -79,11 +79,15 @@ export class VerticalSliderCardEditor
     return html`
       <!-- Entity -->
       <div class="editor-section">
+        <div class="editor-section-title">
+          ${this.hass.localize?.('ui.panel.lovelace.editor.card.generic.entity') || 'Entity'}
+        </div>
         <div class="editor-row">
           <ha-entity-picker
             .hass="${this.hass}"
-            .value="${this._config.entity}"
+            .value="${this._config.entity || ''}"
             .includeDomains="${['cover']}"
+            .entityFilter="${(entity: any) => entity.entity_id.startsWith('cover.')}"
             @value-changed="${this._entityChanged}"
             allow-custom-entity
           ></ha-entity-picker>

@@ -11,7 +11,7 @@ export const cardStyles = css`
     align-items: center;
     padding: 12px;
     box-sizing: border-box;
-    height: 100%;
+    height: var(--vertical-slider-card-height, 400px);
     position: relative;
   }
 
@@ -42,7 +42,7 @@ export const cardStyles = css`
     justify-content: center;
     align-items: stretch;
     width: 100%;
-    min-height: 150px;
+    min-height: 0;
     padding: 8px 0;
   }
 
@@ -70,9 +70,10 @@ export const cardStyles = css`
 
 export const sliderStyles = css`
   :host {
-    display: block;
+    display: flex;
     width: var(--slider-width, 110px);
     height: 100%;
+    min-height: 0;
     --slider-color: var(--state-cover-color, var(--primary-color));
     --slider-bg: color-mix(in srgb, var(--slider-color) 20%, transparent);
   }
@@ -80,13 +81,13 @@ export const sliderStyles = css`
   .container {
     position: relative;
     width: 100%;
-    height: 100%;
+    flex: 1;
+    min-height: 0;
   }
 
   .slider {
-    position: relative;
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    inset: 0;
     border-radius: 24px;
     overflow: hidden;
     touch-action: none;
@@ -127,7 +128,8 @@ export const sliderStyles = css`
     background: var(--card-background-color, #fff);
     border-radius: 2px;
     pointer-events: none;
-    transition: bottom var(--transition-duration, 180ms) ease-in-out;
+    transform: translateY(-50%);
+    transition: top var(--transition-duration, 180ms) ease-in-out;
   }
 
   :host([pressed]) .slider-handle {
@@ -136,18 +138,20 @@ export const sliderStyles = css`
 
   .tooltip {
     position: absolute;
-    left: -40px;
+    left: 0;
+    right: 0;
+    text-align: center;
     font-size: 14px;
     font-weight: 500;
     color: var(--primary-text-color);
     pointer-events: none;
     opacity: 0;
-    transition: opacity 120ms ease-in-out, bottom var(--transition-duration, 180ms) ease-in-out;
+    transition: opacity 120ms ease-in-out;
     white-space: nowrap;
+    transform: translateY(-50%);
   }
 
   :host([pressed]) .tooltip {
     opacity: 1;
-    transition: opacity 120ms ease-in-out;
   }
 `;
