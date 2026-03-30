@@ -74,10 +74,10 @@ export class VerticalCoverSlider extends LitElement {
                style="height: ${fillHeight}"></div>
           <div class="slider-handle"
                style="top: ${handleTop}"></div>
-        </div>
-        <div class="tooltip"
-             style="top: ${handleTop}">
-          ${Math.round(this._displayValue)} %
+          <div class="tooltip"
+               style="top: ${handleTop}">
+            ${Math.round(this._displayValue)} %
+          </div>
         </div>
       </div>
     `;

@@ -184,7 +184,7 @@ export const sliderStyles = css`
     left: 0;
     right: 0;
     background: var(--slider-color);
-    border-radius: 0 0 10px 10px;
+    border-radius: 18px 18px 10px 10px;
     transition: height var(--transition-duration, 180ms) ease-in-out;
   }
 
@@ -209,7 +209,7 @@ export const sliderStyles = css`
 
   .tooltip {
     position: absolute;
-    right: calc(100% + 8px);
+    right: calc(100% + 4px);
     text-align: right;
     font-size: 13px;
     font-weight: 500;
