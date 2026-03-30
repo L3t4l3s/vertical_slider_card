@@ -109,14 +109,19 @@ export class VerticalCoverSlider extends LitElement {
     slider.setPointerCapture(e.pointerId);
     this._activePointerId = e.pointerId;
 
-    // Compare space on each side of the slider within the host element.
-    // The host is inside .slider-container inside .slider-area inside ha-card.
-    const hostRect = this.getBoundingClientRect();
-    const parentEl = (this.parentElement || this.getRootNode() && (this.getRootNode() as ShadowRoot).host?.parentElement);
-    const parentRect = parentEl ? parentEl.getBoundingClientRect() : hostRect;
-    const spaceLeft = hostRect.left - parentRect.left;
-    const spaceRight = parentRect.right - hostRect.right;
-    this._tooltipSide = spaceLeft >= 45 || spaceLeft >= spaceRight ? 'left' : 'right';
+    // Find ha-card bounds to check available space.
+    // this.parentElement = .slider-container (in card's shadow DOM)
+    // .slider-container.closest('ha-card') finds ha-card in same shadow tree.
+    const sliderRect = slider.getBoundingClientRect();
+    const cardEl = this.parentElement?.closest?.('ha-card');
+    if (cardEl) {
+      const cardRect = cardEl.getBoundingClientRect();
+      const spaceLeft = sliderRect.left - cardRect.left;
+      this._tooltipSide = spaceLeft >= 45 ? 'left' : 'right';
+    } else {
+      // Fallback: use viewport
+      this._tooltipSide = sliderRect.left >= 50 ? 'left' : 'right';
+    }
 
     this._pressed = true;
     this._localValue = this._computeValueFromEvent(e);
