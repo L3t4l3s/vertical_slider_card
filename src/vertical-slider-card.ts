@@ -132,16 +132,20 @@ export class VerticalSliderCard extends LitElement implements LovelaceCard {
           <span class="entity-name">${entityName}</span>
         </div>
 
-        <div class="slider-container">
-          <vertical-cover-slider
-            .value="${position}"
-            .disabled="${isUnavailable}"
-            .color="${sliderColor}"
-            @value-changed="${this._onSliderChanged}"
-          ></vertical-cover-slider>
+        <div class="slider-area">
+          <div class="slider-container">
+            <vertical-cover-slider
+              .value="${position}"
+              .disabled="${isUnavailable}"
+              .color="${sliderColor}"
+              @value-changed="${this._onSliderChanged}"
+            ></vertical-cover-slider>
+          </div>
+
+          ${this._renderSideButtons(supportedFeatures)}
         </div>
 
-        ${this._renderFeatures(supportedFeatures)}
+        ${this._renderBottomFeatures(supportedFeatures, position, isUnavailable)}
 
         ${!hideState
           ? html`
@@ -269,28 +273,88 @@ export class VerticalSliderCard extends LitElement implements LovelaceCard {
     handleAction(this, this.hass, this._config, action);
   }
 
-  private _renderFeatures(supportedFeatures: number) {
-    if (!this._config.features?.length) return nothing;
-
-    const featureElements = this._config.features.map((feature) =>
-      this._renderFeature(feature, supportedFeatures),
-    );
-
-    // Filter out empty results
-    if (featureElements.every((el) => el === nothing)) return nothing;
-
-    return html`<div class="features">${featureElements}</div>`;
+  private _hasFeatureType(type: string): boolean {
+    return this._config.features?.some((f) => f.type === type) ?? false;
   }
 
-  private _renderFeature(feature: FeatureConfig, supportedFeatures: number) {
-    switch (feature.type) {
-      case 'cover-open-close':
-        return this._renderOpenClose(supportedFeatures);
-      case 'cover-tilt':
-        return this._renderTilt(supportedFeatures);
-      default:
-        return nothing;
+  /** Buttons that appear vertically beside the slider */
+  private _renderSideButtons(supportedFeatures: number) {
+    if (!this._hasFeatureType('cover-open-close')) return nothing;
+
+    const canOpen = supportedFeatures & CoverEntityFeature.OPEN;
+    const canClose = supportedFeatures & CoverEntityFeature.CLOSE;
+    const canStop = supportedFeatures & CoverEntityFeature.STOP;
+
+    if (!canOpen && !canClose) return nothing;
+
+    return html`
+      <div class="side-buttons">
+        ${canOpen
+          ? html`<ha-icon-button @click="${this._onOpen}">
+              <ha-icon icon="mdi:arrow-up"></ha-icon>
+            </ha-icon-button>`
+          : nothing}
+        ${canStop
+          ? html`<ha-icon-button @click="${this._onStop}">
+              <ha-icon icon="mdi:stop"></ha-icon>
+            </ha-icon-button>`
+          : nothing}
+        ${canClose
+          ? html`<ha-icon-button @click="${this._onClose}">
+              <ha-icon icon="mdi:arrow-down"></ha-icon>
+            </ha-icon-button>`
+          : nothing}
+      </div>
+    `;
+  }
+
+  /** Features that appear below the slider area */
+  private _renderBottomFeatures(
+    supportedFeatures: number,
+    position: number,
+    isUnavailable: boolean,
+  ) {
+    const elements: any[] = [];
+
+    if (this._hasFeatureType('cover-position')) {
+      const canSetPosition = supportedFeatures & CoverEntityFeature.SET_POSITION;
+      if (canSetPosition) {
+        elements.push(this._renderPositionSlider(position, isUnavailable));
+      }
     }
+
+    if (this._hasFeatureType('cover-tilt')) {
+      elements.push(this._renderTilt(supportedFeatures));
+    }
+
+    if (elements.length === 0) return nothing;
+    return html`<div class="bottom-features">${elements}</div>`;
+  }
+
+  private _renderPositionSlider(position: number, isUnavailable: boolean) {
+    return html`
+      <div class="position-slider">
+        <input
+          type="range"
+          min="0"
+          max="100"
+          step="1"
+          .value="${String(position)}"
+          ?disabled="${isUnavailable}"
+          @change="${this._onPositionSliderChanged}"
+        />
+      </div>
+    `;
+  }
+
+  private _onPositionSliderChanged(ev: Event): void {
+    ev.stopPropagation();
+    const target = ev.target as HTMLInputElement;
+    const value = Number(target.value);
+    this.hass.callService('cover', 'set_cover_position', {
+      entity_id: this._config.entity,
+      position: value,
+    });
   }
 
   private _renderOpenClose(supportedFeatures: number) {

@@ -64,31 +64,63 @@ export const cardStyles = css`
     margin-top: 2px;
   }
 
-  /* Slider container */
-  .slider-container {
+  /* Slider area: slider + side buttons */
+  .slider-area {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: stretch;
+    gap: 4px;
     width: 100%;
     min-height: 0;
     padding: 8px 0;
   }
 
-  /* Features row */
-  .features {
+  .slider-container {
     display: flex;
+    justify-content: center;
+    align-items: stretch;
+  }
+
+  /* Side buttons: vertical column next to slider */
+  .side-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 4px;
+    flex-shrink: 0;
+    padding-bottom: 8px;
+  }
+
+  .side-buttons ha-icon-button {
+    --mdc-icon-button-size: 40px;
+    --mdc-icon-size: 20px;
+    color: var(--secondary-text-color);
+    background: var(--card-background-color, var(--ha-card-background));
+    border-radius: 50%;
+  }
+
+  /* Bottom features */
+  .bottom-features {
+    display: flex;
+    flex-direction: column;
     gap: 8px;
     width: 100%;
-    justify-content: center;
     flex-shrink: 0;
     margin-top: 4px;
   }
 
-  .features ha-icon-button {
-    --mdc-icon-button-size: 36px;
-    --mdc-icon-size: 20px;
-    color: var(--primary-text-color);
+  /* Horizontal position slider */
+  .position-slider {
+    width: 100%;
+    padding: 0 4px;
+    box-sizing: border-box;
+  }
+
+  .position-slider input[type="range"] {
+    width: 100%;
+    accent-color: var(--state-cover-color, var(--primary-color));
+    cursor: pointer;
   }
 
   /* Unavailable state */
@@ -118,13 +150,11 @@ export const sliderStyles = css`
   .slider {
     position: absolute;
     inset: 0;
-    border-radius: 24px;
+    border-radius: 28px;
     overflow: hidden;
     touch-action: none;
     cursor: pointer;
     outline: none;
-    /* Padding so handle never sits flush at edges */
-    --slider-padding: 8px;
   }
 
   .slider:focus-visible {
@@ -135,7 +165,6 @@ export const sliderStyles = css`
     position: absolute;
     inset: 0;
     background: var(--slider-bg);
-    border-radius: inherit;
   }
 
   .slider-track-fill {
@@ -144,7 +173,8 @@ export const sliderStyles = css`
     left: 0;
     right: 0;
     background: var(--slider-color);
-    border-radius: inherit;
+    /* No border-radius: top clips to track radius via overflow:hidden,
+       bottom edge stays straight — matches HA native slider */
     transition: height var(--transition-duration, 180ms) ease-in-out;
   }
 
@@ -154,13 +184,12 @@ export const sliderStyles = css`
 
   .slider-handle {
     position: absolute;
-    left: 25%;
-    right: 25%;
+    left: 20%;
+    right: 20%;
     height: 4px;
     background: var(--text-primary-color, #fff);
     border-radius: 2px;
     pointer-events: none;
-    transform: translateY(-50%);
     transition: top var(--transition-duration, 180ms) ease-in-out;
   }
 
@@ -170,9 +199,7 @@ export const sliderStyles = css`
 
   .tooltip {
     position: absolute;
-    left: 0;
-    right: 0;
-    text-align: center;
+    left: -48px;
     font-size: 14px;
     font-weight: 500;
     color: var(--primary-text-color);
@@ -180,7 +207,6 @@ export const sliderStyles = css`
     opacity: 0;
     transition: opacity 120ms ease-in-out;
     white-space: nowrap;
-    transform: translateY(-50%);
   }
 
   :host([pressed]) .tooltip {

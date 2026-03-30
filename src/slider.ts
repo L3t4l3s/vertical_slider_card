@@ -41,8 +41,8 @@ export class VerticalCoverSlider extends LitElement {
 
   render() {
     const fillPct = this._fillFraction * 100;
-    // Clamp handle between 5% and 95% so it never sits flush at edges
-    const handleTop = Math.max(5, Math.min(95, fillPct));
+    // Handle sits at bottom edge of fill, clamped so it doesn't go flush to edges
+    const handleTop = Math.max(4, Math.min(96, fillPct));
     const colorStyle = this.color ? `--slider-color: ${this.color}` : '';
 
     return html`
@@ -62,9 +62,9 @@ export class VerticalCoverSlider extends LitElement {
         >
           <div class="slider-track-bg"></div>
           <div class="slider-track-fill" style="height: ${fillPct}%"></div>
-          <div class="slider-handle" style="top: ${handleTop}%"></div>
+          <div class="slider-handle" style="top: calc(${handleTop}% - 2px)"></div>
         </div>
-        <div class="tooltip" style="top: ${handleTop}%">
+        <div class="tooltip" style="top: calc(${handleTop}% - 2px)">
           ${Math.round(this._displayValue)} %
         </div>
       </div>
