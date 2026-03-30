@@ -144,7 +144,7 @@ export const cardStyles = css`
 export const sliderStyles = css`
   :host {
     display: flex;
-    width: var(--slider-width, 100px);
+    width: var(--slider-width, 84px);
     height: 100%;
     min-height: 0;
     --slider-color: var(--state-cover-color, var(--primary-color));
