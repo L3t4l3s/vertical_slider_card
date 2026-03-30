@@ -59,6 +59,7 @@ export const cardStyles = css`
   }
 
   .last-changed {
+    display: block;
     font-size: 12px;
     color: var(--secondary-text-color);
     margin-top: 2px;

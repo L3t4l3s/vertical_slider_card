@@ -105,7 +105,6 @@ export class VerticalSliderCard extends LitElement implements LovelaceCard {
     const entityName =
       this._config.name || stateObj.attributes.friendly_name || '';
     const stateDisplay = this._computeStateDisplay(stateObj);
-    const lastChanged = this._computeLastChanged(stateObj);
     const sliderColor = this._computeColor();
     const supportedFeatures: number =
       stateObj.attributes.supported_features ?? 0;
@@ -159,8 +158,12 @@ export class VerticalSliderCard extends LitElement implements LovelaceCard {
           ? html`
             <div class="footer">
               <div class="state-text">${stateDisplay}</div>
-              ${lastChanged
-                ? html`<div class="last-changed">${lastChanged}</div>`
+              ${stateObj.last_changed
+                ? html`<ha-relative-time
+                    .hass="${this.hass}"
+                    .datetime="${stateObj.last_changed}"
+                    class="last-changed"
+                  ></ha-relative-time>`
                 : nothing}
             </div>`
           : nothing}
@@ -187,65 +190,6 @@ export class VerticalSliderCard extends LitElement implements LovelaceCard {
     }
 
     return localizedState;
-  }
-
-  private _computeLastChanged(stateObj: any): string {
-    if (!stateObj.last_changed) return '';
-
-    const lastChanged = new Date(stateObj.last_changed);
-    const now = new Date();
-    const diffMs = now.getTime() - lastChanged.getTime();
-    const diffSec = Math.floor(diffMs / 1000);
-    const diffMin = Math.floor(diffSec / 60);
-    const diffHour = Math.floor(diffMin / 60);
-    const diffDay = Math.floor(diffHour / 24);
-
-    // Use HA's relative time if available
-    if (diffSec < 5) {
-      return this.hass.localize?.('ui.components.relative_time.just_now') || 'Jetzt';
-    }
-
-    if (diffSec < 60) {
-      return (
-        this.hass.localize?.(
-          'ui.components.relative_time.duration.second',
-          'count',
-          String(diffSec),
-        ) ||
-        `Vor ${diffSec} Sekunden`
-      );
-    }
-
-    if (diffMin < 60) {
-      return (
-        this.hass.localize?.(
-          'ui.components.relative_time.duration.minute',
-          'count',
-          String(diffMin),
-        ) ||
-        `Vor ${diffMin} Minuten`
-      );
-    }
-
-    if (diffHour < 24) {
-      return (
-        this.hass.localize?.(
-          'ui.components.relative_time.duration.hour',
-          'count',
-          String(diffHour),
-        ) ||
-        `Vor ${diffHour} Stunden`
-      );
-    }
-
-    return (
-      this.hass.localize?.(
-        'ui.components.relative_time.duration.day',
-        'count',
-        String(diffDay),
-      ) ||
-      `Vor ${diffDay} Tagen`
-    );
   }
 
   private _computeColor(): string {
