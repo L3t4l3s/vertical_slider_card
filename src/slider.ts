@@ -39,14 +39,16 @@ export class VerticalCoverSlider extends LitElement {
     return 1 - (val - this.min) / (this.max - this.min);
   }
 
+  /** Minimum visual fill (%) so handle stays visible at 100% open */
+  private static readonly MIN_VISUAL_FILL = 6;
+
   render() {
-    // Ensure minimum 8% fill so slider+handle are always visible even at 100% open
     const rawFillPct = this._fillFraction * 100;
-    const fillPct = Math.max(8, rawFillPct);
+    // Map 0-100% fill linearly to MIN_VISUAL_FILL–100% visual range
+    // So the full drag range animates smoothly, with a small cap visible at 100% open
+    const minFill = VerticalCoverSlider.MIN_VISUAL_FILL;
+    const fillPct = minFill + (rawFillPct / 100) * (100 - minFill);
     const colorStyle = this.color ? `--slider-color: ${this.color}` : '';
-    // Handle at fixed 24px from bottom of fill area
-    const handleBottom = `calc(${100 - fillPct}% + 24px)`;
-    const tooltipBottom = `calc(${100 - fillPct}% + 18px)`;
 
     return html`
       <div class="container" style="${colorStyle}">
@@ -65,9 +67,11 @@ export class VerticalCoverSlider extends LitElement {
         >
           <div class="slider-track-bg"></div>
           <div class="slider-track-fill" style="height: ${fillPct}%"></div>
-          <div class="slider-handle" style="bottom: ${handleBottom}"></div>
+          <div class="slider-handle"
+               style="top: max(10px, calc(${fillPct}% - 26px))"></div>
         </div>
-        <div class="tooltip" style="bottom: ${tooltipBottom}">
+        <div class="tooltip"
+             style="top: max(10px, calc(${fillPct}% - 26px))">
           ${Math.round(this._displayValue)} %
         </div>
       </div>

@@ -91,11 +91,11 @@ export const cardStyles = css`
   }
 
   .side-buttons ha-icon-button {
-    --mdc-icon-button-size: 56px;
+    --mdc-icon-button-size: 64px;
     --mdc-icon-size: 24px;
     color: var(--secondary-text-color);
     background: color-mix(in srgb, var(--secondary-text-color) 15%, transparent);
-    border-radius: 20px;
+    border-radius: 22px;
   }
 
   /* Bottom features */
@@ -164,6 +164,7 @@ export const sliderStyles = css`
     left: 0;
     right: 0;
     background: var(--slider-color);
+    border-radius: 0 0 12px 12px;
     transition: height var(--transition-duration, 180ms) ease-in-out;
   }
 
@@ -179,7 +180,7 @@ export const sliderStyles = css`
     background: var(--text-primary-color, #fff);
     border-radius: 2px;
     pointer-events: none;
-    transition: bottom var(--transition-duration, 180ms) ease-in-out;
+    transition: top var(--transition-duration, 180ms) ease-in-out;
   }
 
   :host([pressed]) .slider-handle {
@@ -197,8 +198,12 @@ export const sliderStyles = css`
     border-radius: 8px;
     pointer-events: none;
     opacity: 0;
-    transition: opacity 120ms ease-in-out;
+    transition: opacity 120ms ease-in-out, top var(--transition-duration, 180ms) ease-in-out;
     white-space: nowrap;
+  }
+
+  :host([pressed]) .tooltip {
+    transition: opacity 120ms ease-in-out;
   }
 
   :host([pressed]) .tooltip {
