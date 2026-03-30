@@ -209,14 +209,14 @@ export const sliderStyles = css`
 
   .tooltip {
     position: absolute;
-    right: calc(100% + 2px);
+    right: 100%;
     text-align: right;
     font-size: 13px;
     font-weight: 500;
     color: var(--primary-text-color);
     background: var(--ha-card-background, var(--card-background-color, #1c1c1c));
-    padding: 4px 8px;
-    border-radius: 8px;
+    padding: 2px 4px;
+    border-radius: 6px;
     pointer-events: none;
     opacity: 0;
     transition: opacity 120ms ease-in-out, top var(--transition-duration, 180ms) ease-in-out;
