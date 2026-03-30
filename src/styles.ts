@@ -91,11 +91,11 @@ export const cardStyles = css`
   }
 
   .side-buttons ha-icon-button {
-    --mdc-icon-button-size: 64px;
+    --mdc-icon-button-size: 72px;
     --mdc-icon-size: 24px;
     color: var(--secondary-text-color);
     background: color-mix(in srgb, var(--secondary-text-color) 15%, transparent);
-    border-radius: 22px;
+    border-radius: 14px;
   }
 
   /* Bottom features */

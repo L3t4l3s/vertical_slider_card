@@ -39,15 +39,11 @@ export class VerticalCoverSlider extends LitElement {
     return 1 - (val - this.min) / (this.max - this.min);
   }
 
-  /** Minimum visual fill (%) so handle stays visible at 100% open */
-  private static readonly MIN_VISUAL_FILL = 6;
-
   render() {
     const rawFillPct = this._fillFraction * 100;
-    // Map 0-100% fill linearly to MIN_VISUAL_FILL–100% visual range
-    // So the full drag range animates smoothly, with a small cap visible at 100% open
-    const minFill = VerticalCoverSlider.MIN_VISUAL_FILL;
-    const fillPct = minFill + (rawFillPct / 100) * (100 - minFill);
+    // Map 0-100% fill to visual range. Minimum fill = enough for handle (36px).
+    // Fill and handle are positioned together so they never diverge.
+    const fillPct = rawFillPct;
     const colorStyle = this.color ? `--slider-color: ${this.color}` : '';
 
     return html`
@@ -66,7 +62,8 @@ export class VerticalCoverSlider extends LitElement {
           @keydown="${this._onKeyDown}"
         >
           <div class="slider-track-bg"></div>
-          <div class="slider-track-fill" style="height: ${fillPct}%"></div>
+          <div class="slider-track-fill"
+               style="height: max(36px, ${fillPct}%)"></div>
           <div class="slider-handle"
                style="top: max(10px, calc(${fillPct}% - 26px))"></div>
         </div>

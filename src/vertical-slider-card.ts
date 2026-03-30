@@ -70,7 +70,7 @@ export class VerticalSliderCard extends LitElement implements LovelaceCard {
       columns: 6,
       rows: 5,
       min_columns: 2,
-      min_rows: 3,
+      min_rows: 4,
     };
   }
 
