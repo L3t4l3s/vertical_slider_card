@@ -1,5 +1,6 @@
 {
   "name": "Vertical Slider Card",
+  "filename": "vertical-slider-card.js",
   "render_readme": true,
-  "filename": "vertical-slider-card.js"
+  "homeassistant": "2024.1.0"
 }
