@@ -144,7 +144,7 @@ export const cardStyles = css`
 export const sliderStyles = css`
   :host {
     display: flex;
-    width: var(--slider-width, 84px);
+    width: var(--slider-width, 72px);
     height: 100%;
     min-height: 0;
     --slider-color: var(--state-cover-color, var(--primary-color));
@@ -209,7 +209,7 @@ export const sliderStyles = css`
 
   .tooltip {
     position: absolute;
-    left: -52px;
+    left: calc(100% + 8px);
     font-size: 13px;
     font-weight: 500;
     color: var(--primary-text-color);

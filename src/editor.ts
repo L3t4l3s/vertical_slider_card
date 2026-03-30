@@ -98,7 +98,7 @@ export class VerticalSliderCardEditor
       <!-- Content -->
       <div class="editor-section">
         <div class="editor-section-title">
-          ${this.hass.localize?.('ui.panel.lovelace.editor.card.generic.appearance') || 'Appearance'}
+          ${this.hass.localize?.('ui.panel.lovelace.editor.card.generic.appearance') || this.hass.localize?.('ui.panel.lovelace.editor.card.tile.appearance') || 'Darstellung'}
         </div>
 
         <div class="editor-row">

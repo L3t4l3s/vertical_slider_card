@@ -141,7 +141,7 @@
 `,At=n`
   :host {
     display: flex;
-    width: var(--slider-width, 84px);
+    width: var(--slider-width, 72px);
     height: 100%;
     min-height: 0;
     --slider-color: var(--state-cover-color, var(--primary-color));
@@ -206,7 +206,7 @@
 
   .tooltip {
     position: absolute;
-    left: -52px;
+    left: calc(100% + 8px);
     font-size: 13px;
     font-weight: 500;
     color: var(--primary-text-color);
@@ -322,7 +322,7 @@
       <!-- Content -->
       <div class="editor-section">
         <div class="editor-section-title">
-          ${this.hass.localize?.("ui.panel.lovelace.editor.card.generic.appearance")||"Appearance"}
+          ${this.hass.localize?.("ui.panel.lovelace.editor.card.generic.appearance")||this.hass.localize?.("ui.panel.lovelace.editor.card.tile.appearance")||"Darstellung"}
         </div>
 
         <div class="editor-row">
