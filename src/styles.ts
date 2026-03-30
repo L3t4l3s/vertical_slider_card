@@ -13,7 +13,7 @@ export const cardStyles = css`
     padding: 12px;
     box-sizing: border-box;
     height: 100%;
-    min-height: 300px;
+    min-height: 200px;
     overflow: hidden;
     position: relative;
   }
@@ -87,40 +87,33 @@ export const cardStyles = css`
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    gap: 4px;
+    gap: 8px;
     flex-shrink: 0;
     padding-bottom: 8px;
   }
 
   .side-buttons ha-icon-button {
-    --mdc-icon-button-size: 40px;
+    --mdc-icon-button-size: 48px;
     --mdc-icon-size: 20px;
     color: var(--secondary-text-color);
-    background: var(--card-background-color, var(--ha-card-background));
-    border-radius: 50%;
+    background: color-mix(in srgb, var(--secondary-text-color) 15%, transparent);
+    border-radius: 18px;
   }
 
   /* Bottom features */
   .bottom-features {
     display: flex;
-    flex-direction: column;
     gap: 8px;
     width: 100%;
+    justify-content: center;
     flex-shrink: 0;
     margin-top: 4px;
   }
 
-  /* Horizontal position slider */
-  .position-slider {
-    width: 100%;
-    padding: 0 4px;
-    box-sizing: border-box;
-  }
-
-  .position-slider input[type="range"] {
-    width: 100%;
-    accent-color: var(--state-cover-color, var(--primary-color));
-    cursor: pointer;
+  .bottom-features ha-icon-button {
+    --mdc-icon-button-size: 40px;
+    --mdc-icon-size: 20px;
+    color: var(--secondary-text-color);
   }
 
   /* Unavailable state */
@@ -133,7 +126,7 @@ export const cardStyles = css`
 export const sliderStyles = css`
   :host {
     display: flex;
-    width: var(--slider-width, 110px);
+    width: var(--slider-width, 100px);
     height: 100%;
     min-height: 0;
     --slider-color: var(--state-cover-color, var(--primary-color));
@@ -173,8 +166,6 @@ export const sliderStyles = css`
     left: 0;
     right: 0;
     background: var(--slider-color);
-    /* No border-radius: top clips to track radius via overflow:hidden,
-       bottom edge stays straight — matches HA native slider */
     transition: height var(--transition-duration, 180ms) ease-in-out;
   }
 
@@ -184,13 +175,13 @@ export const sliderStyles = css`
 
   .slider-handle {
     position: absolute;
-    left: 20%;
-    right: 20%;
+    left: 22%;
+    right: 22%;
     height: 4px;
     background: var(--text-primary-color, #fff);
     border-radius: 2px;
     pointer-events: none;
-    transition: top var(--transition-duration, 180ms) ease-in-out;
+    transition: bottom var(--transition-duration, 180ms) ease-in-out;
   }
 
   :host([pressed]) .slider-handle {
@@ -199,10 +190,13 @@ export const sliderStyles = css`
 
   .tooltip {
     position: absolute;
-    left: -48px;
-    font-size: 14px;
+    left: -52px;
+    font-size: 13px;
     font-weight: 500;
     color: var(--primary-text-color);
+    background: var(--ha-card-background, var(--card-background-color, #1c1c1c));
+    padding: 4px 8px;
+    border-radius: 8px;
     pointer-events: none;
     opacity: 0;
     transition: opacity 120ms ease-in-out;

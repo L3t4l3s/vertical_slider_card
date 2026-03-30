@@ -43,7 +43,7 @@ export class VerticalSliderCard extends LitElement implements LovelaceCard {
     );
     return {
       entity: coverEntity || 'cover.example',
-      features: [{ type: 'cover-open-close' }],
+      features: [{ type: 'cover-position' }, { type: 'cover-open-close' }],
     };
   }
 
@@ -68,7 +68,7 @@ export class VerticalSliderCard extends LitElement implements LovelaceCard {
   public getGridOptions() {
     return {
       columns: 6,
-      rows: 4,
+      rows: 5,
       min_columns: 2,
       min_rows: 3,
     };
@@ -133,19 +133,22 @@ export class VerticalSliderCard extends LitElement implements LovelaceCard {
         </div>
 
         <div class="slider-area">
-          <div class="slider-container">
-            <vertical-cover-slider
-              .value="${position}"
-              .disabled="${isUnavailable}"
-              .color="${sliderColor}"
-              @value-changed="${this._onSliderChanged}"
-            ></vertical-cover-slider>
-          </div>
+          ${this._showVerticalSlider()
+            ? html`
+              <div class="slider-container">
+                <vertical-cover-slider
+                  .value="${position}"
+                  .disabled="${isUnavailable}"
+                  .color="${sliderColor}"
+                  @value-changed="${this._onSliderChanged}"
+                ></vertical-cover-slider>
+              </div>`
+            : nothing}
 
           ${this._renderSideButtons(supportedFeatures)}
         </div>
 
-        ${this._renderBottomFeatures(supportedFeatures, position, isUnavailable)}
+        ${this._renderTiltFeature(supportedFeatures)}
 
         ${!hideState
           ? html`
@@ -277,6 +280,15 @@ export class VerticalSliderCard extends LitElement implements LovelaceCard {
     return this._config.features?.some((f) => f.type === type) ?? false;
   }
 
+  /** cover-position toggle controls vertical slider visibility. Default: ON */
+  private _showVerticalSlider(): boolean {
+    // If no features configured at all, show slider (default behavior)
+    if (!this._config.features?.length) return true;
+    // If cover-position feature is in the list, show slider
+    // If it's explicitly not in the list but other features are, hide slider
+    return this._hasFeatureType('cover-position');
+  }
+
   /** Buttons that appear vertically beside the slider */
   private _renderSideButtons(supportedFeatures: number) {
     if (!this._hasFeatureType('cover-open-close')) return nothing;
@@ -308,53 +320,12 @@ export class VerticalSliderCard extends LitElement implements LovelaceCard {
     `;
   }
 
-  /** Features that appear below the slider area */
-  private _renderBottomFeatures(
-    supportedFeatures: number,
-    position: number,
-    isUnavailable: boolean,
-  ) {
-    const elements: any[] = [];
-
-    if (this._hasFeatureType('cover-position')) {
-      const canSetPosition = supportedFeatures & CoverEntityFeature.SET_POSITION;
-      if (canSetPosition) {
-        elements.push(this._renderPositionSlider(position, isUnavailable));
-      }
-    }
-
-    if (this._hasFeatureType('cover-tilt')) {
-      elements.push(this._renderTilt(supportedFeatures));
-    }
-
-    if (elements.length === 0) return nothing;
-    return html`<div class="bottom-features">${elements}</div>`;
-  }
-
-  private _renderPositionSlider(position: number, isUnavailable: boolean) {
-    return html`
-      <div class="position-slider">
-        <input
-          type="range"
-          min="0"
-          max="100"
-          step="1"
-          .value="${String(position)}"
-          ?disabled="${isUnavailable}"
-          @change="${this._onPositionSliderChanged}"
-        />
-      </div>
-    `;
-  }
-
-  private _onPositionSliderChanged(ev: Event): void {
-    ev.stopPropagation();
-    const target = ev.target as HTMLInputElement;
-    const value = Number(target.value);
-    this.hass.callService('cover', 'set_cover_position', {
-      entity_id: this._config.entity,
-      position: value,
-    });
+  /** Tilt feature below the slider area */
+  private _renderTiltFeature(supportedFeatures: number) {
+    if (!this._hasFeatureType('cover-tilt')) return nothing;
+    const tiltHtml = this._renderTilt(supportedFeatures);
+    if (tiltHtml === nothing) return nothing;
+    return html`<div class="bottom-features">${tiltHtml}</div>`;
   }
 
   private _renderOpenClose(supportedFeatures: number) {
