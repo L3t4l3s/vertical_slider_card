@@ -7,8 +7,6 @@ import { EDITOR_TAG } from './const';
 const FEATURE_TYPES = [
   'cover-open-close',
   'cover-position',
-  'cover-tilt',
-  'cover-tilt-position',
 ] as const;
 
 @customElement(EDITOR_TAG)
