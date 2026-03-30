@@ -2,14 +2,68 @@
 
 A custom Home Assistant Lovelace card that provides a vertical slider for cover entities (blinds, awnings, shutters) — replicating the native HA cover popup slider as a standalone dashboard card.
 
+## Examples
+
+<table>
+  <tr>
+    <td align="center"><b>Minimal</b><br>Slider only</td>
+    <td align="center"><b>Buttons only</b><br>No slider</td>
+    <td align="center"><b>Full</b><br>Slider + Buttons + Status</td>
+  </tr>
+  <tr>
+    <td><img src="images/minimal.png" width="140"></td>
+    <td><img src="images/buttons.png" width="140"></td>
+    <td><img src="images/full.png" width="200"></td>
+  </tr>
+  <tr>
+    <td>
+
+```yaml
+type: custom:vertical-slider-card
+entity: cover.living_room
+name: Living
+hide_icon: true
+hide_state: true
+features:
+  - type: cover-position
+```
+
+</td>
+    <td>
+
+```yaml
+type: custom:vertical-slider-card
+entity: cover.kitchen
+features:
+  - type: cover-open-close
+```
+
+</td>
+    <td>
+
+```yaml
+type: custom:vertical-slider-card
+entity: cover.bedroom
+features:
+  - type: cover-position
+  - type: cover-open-close
+```
+
+</td>
+  </tr>
+</table>
+
 ## Features
 
 - Vertical slider matching the native HA cover popup behavior
 - Drag to set target position, tracks real entity state after release
 - Full HA theme support — all colors derived from the active dashboard theme
-- Configurable like the standard HA Tile card (entity, name, icon, color, actions, features)
-- Open/Close/Stop feature buttons
+- Open / Close / Stop buttons beside the slider
+- Toggle slider and buttons independently via features
+- Hide icon and/or state for compact layouts
+- Responsive tooltip (auto-positions left or right based on space)
 - Visual card editor
+- Localization follows HA language setting
 - HACS compatible
 
 ## Installation
@@ -30,39 +84,9 @@ A custom Home Assistant Lovelace card that provides a vertical slider for cover 
    - URL: `/local/vertical-slider-card.js`
    - Type: JavaScript Module
 
-## Usage
+## Configuration
 
-```yaml
-type: custom:vertical-slider-card
-entity: cover.my_blind
-```
-
-### Full configuration
-
-```yaml
-type: custom:vertical-slider-card
-entity: cover.my_blind
-
-# Content
-name: "Living Room Blind"
-icon: mdi:blinds
-color: purple
-hide_state: false
-
-# Interactions
-tap_action:
-  action: more-info
-hold_action:
-  action: none
-double_tap_action:
-  action: none
-
-# Features
-features:
-  - type: cover-open-close
-```
-
-### Configuration options
+### Options
 
 | Option | Type | Default | Description |
 |---|---|---|---|
@@ -70,20 +94,21 @@ features:
 | `name` | string | Entity name | Override display name |
 | `icon` | string | Entity icon | Override icon |
 | `color` | string | Theme color | Color token (e.g. `purple`, `blue`) |
-| `hide_state` | boolean | `false` | Hide the state text |
-| `tap_action` | action | `more-info` | Tap action |
+| `hide_icon` | boolean | `false` | Hide the icon in the header |
+| `hide_state` | boolean | `false` | Hide state and last-changed |
+| `tap_action` | action | `more-info` | Tap action on card body |
 | `hold_action` | action | `none` | Hold action |
 | `double_tap_action` | action | `none` | Double tap action |
-| `features` | list | `[]` | Feature controls below the slider |
+| `features` | list | `[]` | Feature controls (see below) |
 
-### Available features
+### Features
 
 | Type | Description |
 |---|---|
-| `cover-open-close` | Open / Stop / Close buttons |
-| `cover-position` | Horizontal position slider |
-| `cover-tilt` | Tilt open / stop / close buttons |
-| `cover-tilt-position` | Tilt position slider |
+| `cover-position` | Show the vertical position slider |
+| `cover-open-close` | Open / Stop / Close buttons beside the slider |
+
+Without any features, the card shows just the header and footer. Add `cover-position` for the slider, `cover-open-close` for the buttons, or both.
 
 ## Development
 
