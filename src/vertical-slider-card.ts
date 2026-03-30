@@ -132,7 +132,10 @@ export class VerticalSliderCard extends LitElement implements LovelaceCard {
           <span class="entity-name">${entityName}</span>
         </div>
 
-        <div class="slider-area">
+        <div class="slider-area"
+             @pointerdown="${this._stopProp}"
+             @pointerup="${this._stopProp}"
+             @click="${this._stopProp}">
           ${this._showVerticalSlider()
             ? html`
               <div class="slider-container">
@@ -249,6 +252,10 @@ export class VerticalSliderCard extends LitElement implements LovelaceCard {
       return `var(--${this._config.color}-color, var(--state-cover-color, var(--primary-color)))`;
     }
     return '';
+  }
+
+  private _stopProp(ev: Event): void {
+    ev.stopPropagation();
   }
 
   private _onSliderChanged(ev: CustomEvent): void {

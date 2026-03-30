@@ -82,22 +82,20 @@ export const cardStyles = css`
     align-items: stretch;
   }
 
-  /* Side buttons: vertical column next to slider */
+  /* Side buttons: vertical column next to slider, full height */
   .side-buttons {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    gap: 8px;
+    justify-content: space-between;
     flex-shrink: 0;
-    padding-bottom: 8px;
   }
 
   .side-buttons ha-icon-button {
-    --mdc-icon-button-size: 48px;
-    --mdc-icon-size: 20px;
+    --mdc-icon-button-size: 56px;
+    --mdc-icon-size: 24px;
     color: var(--secondary-text-color);
     background: color-mix(in srgb, var(--secondary-text-color) 15%, transparent);
-    border-radius: 18px;
+    border-radius: 20px;
   }
 
   /* Bottom features */

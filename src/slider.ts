@@ -40,13 +40,13 @@ export class VerticalCoverSlider extends LitElement {
   }
 
   render() {
-    const fillPct = this._fillFraction * 100;
-    // openPct is how much is NOT filled (unfilled area from bottom)
-    const openPct = 100 - fillPct;
-    // Handle sits at a fixed 28px from the bottom of the slider,
-    // offset upward by the open percentage. This keeps it at the
-    // bottom edge of the fill with constant distance from the bottom corner.
+    // Ensure minimum 8% fill so slider+handle are always visible even at 100% open
+    const rawFillPct = this._fillFraction * 100;
+    const fillPct = Math.max(8, rawFillPct);
     const colorStyle = this.color ? `--slider-color: ${this.color}` : '';
+    // Handle at fixed 24px from bottom of fill area
+    const handleBottom = `calc(${100 - fillPct}% + 24px)`;
+    const tooltipBottom = `calc(${100 - fillPct}% + 18px)`;
 
     return html`
       <div class="container" style="${colorStyle}">
@@ -65,11 +65,9 @@ export class VerticalCoverSlider extends LitElement {
         >
           <div class="slider-track-bg"></div>
           <div class="slider-track-fill" style="height: ${fillPct}%"></div>
-          <div class="slider-handle"
-               style="bottom: calc(${openPct}% + 24px)"></div>
+          <div class="slider-handle" style="bottom: ${handleBottom}"></div>
         </div>
-        <div class="tooltip"
-             style="bottom: calc(${openPct}% + 18px)">
+        <div class="tooltip" style="bottom: ${tooltipBottom}">
           ${Math.round(this._displayValue)} %
         </div>
       </div>
