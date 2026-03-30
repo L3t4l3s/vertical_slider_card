@@ -309,19 +309,19 @@ export class VerticalSliderCard extends LitElement implements LovelaceCard {
     return html`
       <div class="side-buttons">
         ${canOpen
-          ? html`<ha-icon-button @click="${this._onOpen}">
+          ? html`<button class="cover-btn" @click="${this._onOpen}">
               <ha-icon icon="mdi:arrow-up"></ha-icon>
-            </ha-icon-button>`
+            </button>`
           : nothing}
         ${canStop
-          ? html`<ha-icon-button @click="${this._onStop}">
+          ? html`<button class="cover-btn" @click="${this._onStop}">
               <ha-icon icon="mdi:stop"></ha-icon>
-            </ha-icon-button>`
+            </button>`
           : nothing}
         ${canClose
-          ? html`<ha-icon-button @click="${this._onClose}">
+          ? html`<button class="cover-btn" @click="${this._onClose}">
               <ha-icon icon="mdi:arrow-down"></ha-icon>
-            </ha-icon-button>`
+            </button>`
           : nothing}
       </div>
     `;

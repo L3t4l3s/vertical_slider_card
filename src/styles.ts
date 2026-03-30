@@ -90,13 +90,32 @@ export const cardStyles = css`
     flex-shrink: 0;
   }
 
-  .side-buttons ha-icon-button {
-    --mdc-icon-button-size: 72px;
-    --mdc-icon-size: 24px;
-    width: 80px;
+  .cover-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    min-height: 48px;
+    width: 48px;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
     color: var(--secondary-text-color);
-    background: color-mix(in srgb, var(--secondary-text-color) 15%, transparent);
+    background: color-mix(in srgb, var(--secondary-text-color) 12%, transparent);
     border-radius: 14px;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 120ms ease-in-out;
+    --mdc-icon-size: 24px;
+  }
+
+  .cover-btn + .cover-btn {
+    margin-top: 8px;
+  }
+
+  .cover-btn:active {
+    background: color-mix(in srgb, var(--secondary-text-color) 25%, transparent);
   }
 
   /* Bottom features */
