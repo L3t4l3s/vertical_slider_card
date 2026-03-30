@@ -144,7 +144,7 @@ export const cardStyles = css`
 export const sliderStyles = css`
   :host {
     display: flex;
-    width: var(--slider-width, 72px);
+    width: var(--slider-width, 78px);
     height: 100%;
     min-height: 0;
     --slider-color: var(--state-cover-color, var(--primary-color));
@@ -161,7 +161,7 @@ export const sliderStyles = css`
   .slider {
     position: absolute;
     inset: 0;
-    border-radius: 28px;
+    border-radius: 24px;
     overflow: hidden;
     touch-action: none;
     cursor: pointer;
@@ -184,7 +184,7 @@ export const sliderStyles = css`
     left: 0;
     right: 0;
     background: var(--slider-color);
-    border-radius: 0 0 12px 12px;
+    border-radius: 0 0 10px 10px;
     transition: height var(--transition-duration, 180ms) ease-in-out;
   }
 
@@ -209,7 +209,8 @@ export const sliderStyles = css`
 
   .tooltip {
     position: absolute;
-    left: calc(100% + 8px);
+    right: calc(100% + 8px);
+    text-align: right;
     font-size: 13px;
     font-weight: 500;
     color: var(--primary-text-color);
