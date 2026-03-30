@@ -128,7 +128,9 @@ export class VerticalSliderCard extends LitElement implements LovelaceCard {
         })}"
       >
         <div class="header">
-          <ha-icon .icon="${icon}"></ha-icon>
+          ${this._config.hide_icon !== true
+            ? html`<ha-icon .icon="${icon}"></ha-icon>`
+            : nothing}
           <span class="entity-name">${entityName}</span>
         </div>
 

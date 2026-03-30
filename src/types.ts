@@ -11,6 +11,7 @@ export interface VerticalSliderCardConfig extends LovelaceCardConfig {
   show_entity_picture?: boolean;
   vertical?: boolean;
   hide_state?: boolean;
+  hide_icon?: boolean;
 
   // Interactions
   tap_action?: ActionConfig;

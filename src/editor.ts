@@ -118,7 +118,18 @@ export class VerticalSliderCardEditor
 
         <div class="editor-row">
           <ha-formfield
-            .label="${this.hass.localize?.('ui.panel.lovelace.editor.card.tile.hide_state') || 'Hide state'}"
+            .label="${this.hass.localize?.('ui.panel.lovelace.editor.card.generic.show_icon') || 'Symbol anzeigen'}"
+          >
+            <ha-switch
+              .checked="${this._config.hide_icon !== true}"
+              @change="${this._hideIconChanged}"
+            ></ha-switch>
+          </ha-formfield>
+        </div>
+
+        <div class="editor-row">
+          <ha-formfield
+            .label="${this.hass.localize?.('ui.panel.lovelace.editor.card.tile.hide_state') || 'Zustand ausblenden'}"
           >
             <ha-switch
               .checked="${this._config.hide_state || false}"
@@ -185,6 +196,12 @@ export class VerticalSliderCardEditor
 
   private _iconChanged(ev: CustomEvent): void {
     this._updateConfig({ icon: ev.detail.value || undefined });
+  }
+
+  private _hideIconChanged(ev: Event): void {
+    const target = ev.target as HTMLInputElement;
+    // Switch shows "show icon", so checked=true means hide_icon=false
+    this._updateConfig({ hide_icon: !target.checked || undefined });
   }
 
   private _hideStateChanged(ev: Event): void {
