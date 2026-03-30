@@ -69,7 +69,7 @@
     display: flex;
     justify-content: center;
     align-items: stretch;
-    gap: 4px;
+    gap: 12px;
     width: 100%;
     min-height: 0;
     padding: 8px 0;
@@ -92,6 +92,7 @@
   .side-buttons ha-icon-button {
     --mdc-icon-button-size: 72px;
     --mdc-icon-size: 24px;
+    width: 80px;
     color: var(--secondary-text-color);
     background: color-mix(in srgb, var(--secondary-text-color) 15%, transparent);
     border-radius: 14px;
@@ -206,7 +207,7 @@
   :host([pressed]) .tooltip {
     opacity: 1;
   }
-`;class St{constructor(t){}get _$AU(){return this._$AM._$AU}_$AT(t,e,i){this._$Ct=t,this._$AM=e,this._$Ci=i}_$AS(t,e){return this.update(t,e)}update(t,e){return this.render(...e)}}const Et=(t=>(...e)=>({_$litDirective$:t,values:e}))(class extends St{update(t,[e]){const i=t.element;return i._actionHandler?i._actionHandler.options=e:(i._actionHandler={options:e,held:!1},i.addEventListener("pointerdown",t=>{const e=i._actionHandler;e.held=!1,e.options.hasHold&&(e.timer=setTimeout(()=>{e.held=!0,i.dispatchEvent(new CustomEvent("action",{detail:{action:"hold"},bubbles:!0,composed:!0}))},500))}),i.addEventListener("pointerup",()=>{const t=i._actionHandler;t.timer&&(clearTimeout(t.timer),t.timer=void 0),t.held||(t.options.hasDoubleClick?t.dblClickTimer?(clearTimeout(t.dblClickTimer),t.dblClickTimer=void 0,i.dispatchEvent(new CustomEvent("action",{detail:{action:"double_tap"},bubbles:!0,composed:!0}))):t.dblClickTimer=setTimeout(()=>{t.dblClickTimer=void 0,i.dispatchEvent(new CustomEvent("action",{detail:{action:"tap"},bubbles:!0,composed:!0}))},250):i.dispatchEvent(new CustomEvent("action",{detail:{action:"tap"},bubbles:!0,composed:!0})))}),i.addEventListener("pointercancel",()=>{const t=i._actionHandler;t.timer&&(clearTimeout(t.timer),t.timer=void 0)})),q}render(t){return q}});function Ct(t){return void 0!==t&&"none"!==t.action}var Pt=function(t,e,i,o){var s,n=arguments.length,r=n<3?e:null===o?o=Object.getOwnPropertyDescriptor(e,i):o;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)r=Reflect.decorate(t,e,i,o);else for(var a=t.length-1;a>=0;a--)(s=t[a])&&(r=(n<3?s(r):n>3?s(e,i,r):s(e,i))||r);return n>3&&r&&Object.defineProperty(e,i,r),r};let kt=class extends ct{constructor(){super(...arguments),this.value=0,this.min=0,this.max=100,this.step=1,this.disabled=!1,this.color="",this._pressed=!1,this._localValue=null,this._activePointerId=null}static{this.styles=xt}updated(t){t.has("_pressed")&&(this._pressed?this.setAttribute("pressed",""):this.removeAttribute("pressed"))}get _displayValue(){return this._localValue??this.value}get _fillFraction(){return 1-(this._displayValue-this.min)/(this.max-this.min)}render(){const t=100*this._fillFraction,e=this.color?`--slider-color: ${this.color}`:"";return F`
+`;class St{constructor(t){}get _$AU(){return this._$AM._$AU}_$AT(t,e,i){this._$Ct=t,this._$AM=e,this._$Ci=i}_$AS(t,e){return this.update(t,e)}update(t,e){return this.render(...e)}}const Et=(t=>(...e)=>({_$litDirective$:t,values:e}))(class extends St{update(t,[e]){const i=t.element;return i._actionHandler?i._actionHandler.options=e:(i._actionHandler={options:e,held:!1},i.addEventListener("pointerdown",t=>{const e=i._actionHandler;e.held=!1,e.options.hasHold&&(e.timer=setTimeout(()=>{e.held=!0,i.dispatchEvent(new CustomEvent("action",{detail:{action:"hold"},bubbles:!0,composed:!0}))},500))}),i.addEventListener("pointerup",()=>{const t=i._actionHandler;t.timer&&(clearTimeout(t.timer),t.timer=void 0),t.held||(t.options.hasDoubleClick?t.dblClickTimer?(clearTimeout(t.dblClickTimer),t.dblClickTimer=void 0,i.dispatchEvent(new CustomEvent("action",{detail:{action:"double_tap"},bubbles:!0,composed:!0}))):t.dblClickTimer=setTimeout(()=>{t.dblClickTimer=void 0,i.dispatchEvent(new CustomEvent("action",{detail:{action:"tap"},bubbles:!0,composed:!0}))},250):i.dispatchEvent(new CustomEvent("action",{detail:{action:"tap"},bubbles:!0,composed:!0})))}),i.addEventListener("pointercancel",()=>{const t=i._actionHandler;t.timer&&(clearTimeout(t.timer),t.timer=void 0)})),q}render(t){return q}});function Ct(t){return void 0!==t&&"none"!==t.action}var Pt=function(t,e,i,o){var s,n=arguments.length,r=n<3?e:null===o?o=Object.getOwnPropertyDescriptor(e,i):o;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)r=Reflect.decorate(t,e,i,o);else for(var a=t.length-1;a>=0;a--)(s=t[a])&&(r=(n<3?s(r):n>3?s(e,i,r):s(e,i))||r);return n>3&&r&&Object.defineProperty(e,i,r),r};let kt=class extends ct{constructor(){super(...arguments),this.value=0,this.min=0,this.max=100,this.step=1,this.disabled=!1,this.color="",this._pressed=!1,this._localValue=null,this._activePointerId=null}static{this.styles=xt}updated(t){t.has("_pressed")&&(this._pressed?this.setAttribute("pressed",""):this.removeAttribute("pressed"))}get _displayValue(){return this._localValue??this.value}get _fillFraction(){return 1-(this._displayValue-this.min)/(this.max-this.min)}render(){const t=100*this._fillFraction,e=this.color?`--slider-color: ${this.color}`:"",i=`max(16px, calc(${t}% - 20px))`;return F`
       <div class="container" style="${e}">
         <div
           class="slider"
@@ -225,10 +226,10 @@
           <div class="slider-track-fill"
                style="height: max(36px, ${t}%)"></div>
           <div class="slider-handle"
-               style="top: max(10px, calc(${t}% - 26px))"></div>
+               style="top: ${i}"></div>
         </div>
         <div class="tooltip"
-             style="top: max(10px, calc(${t}% - 26px))">
+             style="top: ${i}">
           ${Math.round(this._displayValue)} %
         </div>
       </div>

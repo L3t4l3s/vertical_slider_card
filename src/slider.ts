@@ -40,11 +40,13 @@ export class VerticalCoverSlider extends LitElement {
   }
 
   render() {
-    const rawFillPct = this._fillFraction * 100;
-    // Map 0-100% fill to visual range. Minimum fill = enough for handle (36px).
-    // Fill and handle are positioned together so they never diverge.
-    const fillPct = rawFillPct;
+    const fillPct = this._fillFraction * 100;
     const colorStyle = this.color ? `--slider-color: ${this.color}` : '';
+    // Fill: min 36px so the cap is always visible
+    // Handle: centered in the fill cap. At fillPct=0 (100% open),
+    // the fill is 36px tall, handle at 16px from top (centered).
+    // At fillPct=100 (0% open, fully closed), handle near bottom.
+    const handleTop = `max(16px, calc(${fillPct}% - 20px))`;
 
     return html`
       <div class="container" style="${colorStyle}">
@@ -65,10 +67,10 @@ export class VerticalCoverSlider extends LitElement {
           <div class="slider-track-fill"
                style="height: max(36px, ${fillPct}%)"></div>
           <div class="slider-handle"
-               style="top: max(10px, calc(${fillPct}% - 26px))"></div>
+               style="top: ${handleTop}"></div>
         </div>
         <div class="tooltip"
-             style="top: max(10px, calc(${fillPct}% - 26px))">
+             style="top: ${handleTop}">
           ${Math.round(this._displayValue)} %
         </div>
       </div>

@@ -70,7 +70,7 @@ export const cardStyles = css`
     display: flex;
     justify-content: center;
     align-items: stretch;
-    gap: 4px;
+    gap: 12px;
     width: 100%;
     min-height: 0;
     padding: 8px 0;
@@ -93,6 +93,7 @@ export const cardStyles = css`
   .side-buttons ha-icon-button {
     --mdc-icon-button-size: 72px;
     --mdc-icon-size: 24px;
+    width: 80px;
     color: var(--secondary-text-color);
     background: color-mix(in srgb, var(--secondary-text-color) 15%, transparent);
     border-radius: 14px;
