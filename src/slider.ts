@@ -42,11 +42,17 @@ export class VerticalCoverSlider extends LitElement {
   render() {
     const fillPct = this._fillFraction * 100;
     const colorStyle = this.color ? `--slider-color: ${this.color}` : '';
-    // Fill: min 36px so the cap is always visible
-    // Handle: centered in the fill cap. At fillPct=0 (100% open),
-    // the fill is 36px tall, handle at 16px from top (centered).
-    // At fillPct=100 (0% open, fully closed), handle near bottom.
-    const handleTop = `max(16px, calc(${fillPct}% - 20px))`;
+
+    // Handle and fill move together using the same reference system.
+    // Handle top: 16px (at 100% open) to calc(100% - 20px) (at 0% closed).
+    // Fill bottom edge = handle position + 20px offset.
+    // At 100% open (fillPct=0): handle at 16px, fill = 36px.
+    // At 0% closed (fillPct=100): handle near bottom, fill = 100%.
+    //
+    // handleTop = 16px + fillPct% of (100% - 36px)
+    // This linearly maps fillPct 0->100 to 16px -> (100% - 20px)
+    const handleTop = `calc(16px + ${fillPct} * (100% - 36px) / 100)`;
+    const fillHeight = `calc(36px + ${fillPct} * (100% - 36px) / 100)`;
 
     return html`
       <div class="container" style="${colorStyle}">
@@ -65,7 +71,7 @@ export class VerticalCoverSlider extends LitElement {
         >
           <div class="slider-track-bg"></div>
           <div class="slider-track-fill"
-               style="height: max(36px, ${fillPct}%)"></div>
+               style="height: ${fillHeight}"></div>
           <div class="slider-handle"
                style="top: ${handleTop}"></div>
         </div>
@@ -82,12 +88,12 @@ export class VerticalCoverSlider extends LitElement {
     if (!slider) return this.value;
 
     const rect = slider.getBoundingClientRect();
-    // The usable drag area excludes the top 36px cap (handle area).
-    // Map pointer from [36px .. rect.height] to [100% .. 0%]
-    const capPx = 36;
-    const usableHeight = rect.height - capPx;
-    const pointerY = e.clientY - rect.top - capPx;
-    // fraction: 0 = just below cap (100% open), 1 = bottom (0% closed)
+    // Usable range matches handle travel: 16px (top, 100%) to rect.height-20px (bottom, 0%)
+    const topPx = 16;
+    const bottomPx = rect.height - 20;
+    const usableHeight = bottomPx - topPx;
+    const pointerY = e.clientY - rect.top - topPx;
+    // fraction: 0 = top (100% open), 1 = bottom (0% closed)
     const fraction = Math.max(0, Math.min(1, pointerY / usableHeight));
     const rawValue = (1 - fraction) * (this.max - this.min) + this.min;
 
