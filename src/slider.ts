@@ -109,9 +109,14 @@ export class VerticalCoverSlider extends LitElement {
     slider.setPointerCapture(e.pointerId);
     this._activePointerId = e.pointerId;
 
-    // Check if there's enough space to the left for the tooltip (~45px)
-    const rect = slider.getBoundingClientRect();
-    this._tooltipSide = rect.left >= 50 ? 'left' : 'right';
+    // Check space left of slider within the card (not viewport).
+    // Walk up to find ha-card or use offsetLeft within parent.
+    const sliderRect = slider.getBoundingClientRect();
+    const root = this.getRootNode() as ShadowRoot | undefined;
+    const card = this.closest('ha-card') || root?.host?.closest?.('ha-card');
+    const cardLeft = card ? card.getBoundingClientRect().left : 0;
+    const spaceLeft = sliderRect.left - cardLeft;
+    this._tooltipSide = spaceLeft >= 45 ? 'left' : 'right';
 
     this._pressed = true;
     this._localValue = this._computeValueFromEvent(e);
