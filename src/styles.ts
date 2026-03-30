@@ -48,7 +48,7 @@ export const cardStyles = css`
     text-align: center;
     width: 100%;
     flex-shrink: 0;
-    margin-top: 4px;
+    margin-top: 2px;
   }
 
   .state-text {
@@ -73,7 +73,7 @@ export const cardStyles = css`
     gap: 12px;
     width: 100%;
     min-height: 0;
-    padding: 8px 0;
+    padding: 4px 0;
   }
 
   .slider-container {

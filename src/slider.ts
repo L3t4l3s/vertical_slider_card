@@ -43,11 +43,11 @@ export class VerticalCoverSlider extends LitElement {
     const fillPct = this._fillFraction * 100;
     const colorStyle = this.color ? `--slider-color: ${this.color}` : '';
 
-    // Handle at 12px (100% open) to calc(100% - 16px) (0% closed).
-    // Fill = handle + 14px below it.
-    // Cap at 100% open: fill=26px, handle at 12px (centered in cap).
-    const handleTop = `calc(12px + ${fillPct} * (100% - 28px) / 100)`;
+    // Fill and handle use the same formula base.
+    // Fill: min 26px at 100% open, 100% at 0% closed.
+    // Handle: always 13px above fill bottom (centered in 26px cap).
     const fillHeight = `calc(26px + ${fillPct} * (100% - 26px) / 100)`;
+    const handleTop = `calc(26px + ${fillPct} * (100% - 26px) / 100 - 15px)`;
 
     return html`
       <div class="container" style="${colorStyle}">
@@ -83,9 +83,9 @@ export class VerticalCoverSlider extends LitElement {
     if (!slider) return this.value;
 
     const rect = slider.getBoundingClientRect();
-    // Usable range matches handle travel: 12px (top, 100%) to rect.height-16px (bottom, 0%)
-    const topPx = 12;
-    const bottomPx = rect.height - 16;
+    // Usable range matches handle travel: 11px (top, 100%) to rect.height-15px (bottom, 0%)
+    const topPx = 11;
+    const bottomPx = rect.height - 15;
     const usableHeight = bottomPx - topPx;
     const pointerY = e.clientY - rect.top - topPx;
     // fraction: 0 = top (100% open), 1 = bottom (0% closed)
