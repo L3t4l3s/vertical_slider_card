@@ -10,7 +10,7 @@ export const cardStyles = css`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 12px;
+    padding: 8px 12px;
     box-sizing: border-box;
     height: 100%;
     min-height: 200px;
@@ -26,7 +26,7 @@ export const cardStyles = css`
     width: 100%;
     justify-content: center;
     flex-shrink: 0;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
     color: var(--primary-text-color);
   }
 
@@ -73,7 +73,7 @@ export const cardStyles = css`
     gap: 12px;
     width: 100%;
     min-height: 0;
-    padding: 4px 0;
+    padding: 0;
   }
 
   .slider-container {
