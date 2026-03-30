@@ -16,6 +16,7 @@ export class VerticalCoverSlider extends LitElement {
 
   @state() private _pressed = false;
   @state() private _localValue: number | null = null;
+  @state() private _tooltipSide: 'left' | 'right' = 'left';
 
   private _activePointerId: number | null = null;
 
@@ -70,7 +71,7 @@ export class VerticalCoverSlider extends LitElement {
           <div class="slider-handle"
                style="top: ${handleTop}"></div>
         </div>
-        <div class="tooltip"
+        <div class="tooltip ${this._tooltipSide}"
              style="top: ${handleTop}">
           ${Math.round(this._displayValue)} %
         </div>
@@ -107,6 +108,11 @@ export class VerticalCoverSlider extends LitElement {
     const slider = e.currentTarget as HTMLElement;
     slider.setPointerCapture(e.pointerId);
     this._activePointerId = e.pointerId;
+
+    // Check if there's enough space to the left for the tooltip (~45px)
+    const rect = slider.getBoundingClientRect();
+    this._tooltipSide = rect.left >= 50 ? 'left' : 'right';
+
     this._pressed = true;
     this._localValue = this._computeValueFromEvent(e);
 
