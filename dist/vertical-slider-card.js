@@ -95,7 +95,7 @@
     justify-content: center;
     flex: 1;
     min-height: 48px;
-    width: 48px;
+    width: 64px;
     border: none;
     padding: 0;
     margin: 0;
