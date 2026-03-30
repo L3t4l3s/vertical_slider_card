@@ -161,7 +161,7 @@ export const sliderStyles = css`
   .slider {
     position: absolute;
     inset: 0;
-    border-radius: 24px;
+    border-radius: 20px;
     overflow: hidden;
     touch-action: none;
     cursor: pointer;
@@ -184,7 +184,7 @@ export const sliderStyles = css`
     left: 0;
     right: 0;
     background: var(--slider-color);
-    border-radius: 18px 18px 10px 10px;
+    border-radius: 14px 14px 8px 8px;
     transition: height var(--transition-duration, 180ms) ease-in-out;
   }
 
@@ -209,7 +209,7 @@ export const sliderStyles = css`
 
   .tooltip {
     position: absolute;
-    right: calc(100% + 4px);
+    right: calc(100% + 2px);
     text-align: right;
     font-size: 13px;
     font-weight: 500;
